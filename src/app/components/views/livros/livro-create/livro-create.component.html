@@ -1,0 +1,38 @@
+<div class="content">
+    <div class="title">
+        <h1>Novo Livro</h1>
+    </div>
+</div>
+
+<form>
+    <mat-form-field class="forms">
+        <mat-label>Titulo</mat-label>
+        <input [(ngModel)]="livro.titulo" [formControl]="titulo" required matInput type="text" name="titulo" maxlength="40" placeholder="Ex. Java - Como Programar">
+        <mat-error *ngIf="titulo.invalid">{{ getMenssage() }}</mat-error>
+    </mat-form-field>
+    <mat-form-field class="forms">
+        <mat-label>Editora</mat-label>
+        <input [(ngModel)]="livro.editora" [formControl]="editora" required matInput type="text" name="editora" maxlength="40" placeholder="Ex. Deitel">
+        <mat-error *ngIf="editora.invalid">{{ getMenssage() }}</mat-error>
+    </mat-form-field>
+    <mat-form-field class="forms">
+        <mat-label>Edição</mat-label>
+        <input [(ngModel)]="livro.edicao" [formControl]="edicao" required matInput type="number" name="edicao" placeholder="Edição o livro">
+        <mat-error *ngIf="edicao.invalid">{{ getMenssage() }}</mat-error>
+    </mat-form-field>
+    <mat-form-field class="forms">
+        <mat-label>Ano Publicação</mat-label>
+        <input [(ngModel)]="livro.anoPublicacao" [formControl]="anoPublicacao" required matInput type="text" name="anoPublicacao" maxlength="4" placeholder="Ano de publicação do livro">
+        <mat-error *ngIf="anoPublicacao.invalid">{{ getMenssage() }}</mat-error>
+    </mat-form-field>
+    <mat-form-field class="forms">
+        <mat-label>Valor</mat-label>
+        <input [(ngModel)]="livro.valor" [formControl]="valor" required matInput type="number" name="valor" placeholder="Edição o livro">
+        <mat-error *ngIf="valor.invalid">{{ getMenssage() }}</mat-error>
+    </mat-form-field>
+    <div class="buttons">
+        <button (click)="create()" [disabled]="getMenssage()" class="mat-elevation-z8" mat-stroked-button color="primary">SALVAR</button>
+        <button (click)="cancelar()" class="mat-elevation-z8" mat-stroked-button color="warn">CANCELAR</button>
+    </div>
+
+</form>

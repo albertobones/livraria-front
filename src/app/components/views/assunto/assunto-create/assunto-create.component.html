@@ -1,0 +1,17 @@
+<div class="content">
+    <div class="title">
+        <h1>Novo Assunto</h1>
+    </div>
+</div>
+
+<form>
+    <mat-form-field class="forms">
+        <mat-label>Descrição</mat-label>
+        <textarea [(ngModel)]="assunto.descricao" matInput type="text" name="descricao" placeholder="Ex. Informática"></textarea>
+    </mat-form-field>
+    <div class="buttons">
+        <button (click)="create()" class="mat-elevation-z8" mat-stroked-button color="primary">SALVAR</button>
+        <button (click)="cancelar()" class="mat-elevation-z8" mat-stroked-button color="warn">CANCELAR</button>
+    </div>
+
+</form>
