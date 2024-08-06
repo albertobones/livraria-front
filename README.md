@@ -12,7 +12,9 @@ Caso não tenha a versão instalada do node, você pode usar o nvm tem versão para 
 ## Instalação
 
 -git clone no repositório do projeto
--entre na pasta do projeto e execute npm install
+-entre na pasta do projeto 
+-git checkout develop 
+-execute o comando no terminal npm install
 
 ## Development server
 
