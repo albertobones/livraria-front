@@ -7,7 +7,7 @@
 <form>
     <mat-form-field class="forms">
         <mat-label>Nome</mat-label>
-        <input matInput [(ngModel)]="autor.nome" type="text" name="nome" placeholder="Ex. Jonas">
+        <input matInput [(ngModel)]="autor.nome" type="text" maxlength="40" name="nome" placeholder="Ex. Jonas">
     </mat-form-field>    
     <div class="buttons">
         <button (click)="update()" class="mat-elevation-z8" mat-stroked-button color="primary">ALTERAR</button>

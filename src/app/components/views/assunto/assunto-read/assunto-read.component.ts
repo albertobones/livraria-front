@@ -24,7 +24,6 @@ export class AssuntoReadComponent implements OnInit {
 
   findAll() {
     this.assuntoService.findAll().subscribe((resp) => {
-      //console.log(resp);
       this.assuntos = resp;
     });
   }

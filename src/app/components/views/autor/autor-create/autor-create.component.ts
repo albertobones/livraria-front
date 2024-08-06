@@ -24,7 +24,6 @@ export class AutorCreateComponent implements OnInit {
 
   create(): void {
     this.autorService.create(this.autor).subscribe(resposta => {
-      console.log(resposta)
       this.router.navigate(['autores'])
       this.autorService.apresentarMensagem('Autor criado com sucesso!');
     }, err => {

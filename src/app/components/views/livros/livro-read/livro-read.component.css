@@ -38,3 +38,16 @@
       width: 2rem;
   }
   
+  .centered-cell {
+    text-align: center;
+  }
+
+  .left-cell {
+    text-align: left;
+  }
+
+  .centered-header {
+    
+    align-items: center;
+    justify-content: center;
+  }

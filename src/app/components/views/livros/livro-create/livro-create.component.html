@@ -8,30 +8,100 @@
     <mat-form-field class="forms">
         <mat-label>Titulo</mat-label>
         <input [(ngModel)]="livro.titulo" [formControl]="titulo" required matInput type="text" name="titulo" maxlength="40" placeholder="Ex. Java - Como Programar">
-        <mat-error *ngIf="titulo.invalid">{{ getMenssage() }}</mat-error>
+        <mat-error *ngIf="titulo.invalid"></mat-error>
     </mat-form-field>
     <mat-form-field class="forms">
         <mat-label>Editora</mat-label>
         <input [(ngModel)]="livro.editora" [formControl]="editora" required matInput type="text" name="editora" maxlength="40" placeholder="Ex. Deitel">
-        <mat-error *ngIf="editora.invalid">{{ getMenssage() }}</mat-error>
+        <mat-error *ngIf="editora.invalid"></mat-error>
     </mat-form-field>
     <mat-form-field class="forms">
         <mat-label>Edição</mat-label>
         <input [(ngModel)]="livro.edicao" [formControl]="edicao" required matInput type="number" name="edicao" placeholder="Edição o livro">
-        <mat-error *ngIf="edicao.invalid">{{ getMenssage() }}</mat-error>
+        <mat-error *ngIf="edicao.invalid"></mat-error>
     </mat-form-field>
     <mat-form-field class="forms">
         <mat-label>Ano Publicação</mat-label>
-        <input [(ngModel)]="livro.anoPublicacao" [formControl]="anoPublicacao" required matInput type="text" name="anoPublicacao" maxlength="4" placeholder="Ano de publicação do livro">
-        <mat-error *ngIf="anoPublicacao.invalid">{{ getMenssage() }}</mat-error>
+        <input [(ngModel)]="livro.anoPublicacao" [formControl]="anoPublicacao" required matInput type="text" name="anoPublicacao" maxlength="4" placeholder="Ano de publicação do livro"(input)="onInput($event)">
+        <mat-error *ngIf="anoPublicacao.invalid"></mat-error>
     </mat-form-field>
     <mat-form-field class="forms">
         <mat-label>Valor</mat-label>
         <input [(ngModel)]="livro.valor" [formControl]="valor" required matInput type="number" name="valor" placeholder="Edição o livro">
-        <mat-error *ngIf="valor.invalid">{{ getMenssage() }}</mat-error>
+        <mat-error *ngIf="valor.invalid"></mat-error>
     </mat-form-field>
+
+    <div class="group-container">
+        <mat-form-field class="forms" appearance="fill">
+            <mat-label>Autores</mat-label>
+            <div class="select-with-button">
+                <mat-select [(ngModel)]="selectedAutor" name="selectedAutor">
+                    <mat-option *ngFor="let autor of filteredAutores" [value]="autor">
+                        {{ autor.nome }}
+                    </mat-option>
+                </mat-select>
+                <button mat-icon-button type="button" (click)="addAutor()">
+                    <mat-icon>add</mat-icon>
+                </button>
+            </div>
+        </mat-form-field>
+        <table mat-table [dataSource]="autoresDataSource" class="mat-elevation-z8 forms">
+            <ng-container matColumnDef="nome">
+            <th mat-header-cell *matHeaderCellDef> Nome </th>
+            <td mat-cell *matCellDef="let autor" class="align-left"> {{autor.nome}} </td>
+            </ng-container>
+    
+            <ng-container matColumnDef="actions">
+            <th mat-header-cell *matHeaderCellDef class="align-right"> Ações </th>
+            <td mat-cell *matCellDef="let autor" class="align-right">
+                <button mat-icon-button color="warn" (click)="removeAutor(autor)" class="action-button">
+                <mat-icon>remove</mat-icon>
+                </button>
+            </td>
+            </ng-container>
+    
+            <tr mat-header-row *matHeaderRowDef="['nome', 'actions']"></tr>
+            <tr mat-row *matRowDef="let row; columns: ['nome', 'actions'];"></tr>
+        </table>
+    </div>
+
+    <div class="group-container">
+        <mat-form-field class="forms" appearance="fill">
+            <mat-label>Assuntos</mat-label>
+            <div class="select-with-button">
+                <mat-select [(ngModel)]="selectedAssunto" name="selectedAssunto">
+                    <mat-option *ngFor="let assunto of filteredAssuntos" [value]="assunto">
+                        {{ assunto.descricao }}
+                    </mat-option>
+                </mat-select>
+                <button mat-icon-button type="button" (click)="addAssunto()">
+                    <mat-icon>add</mat-icon>
+                </button>
+            </div>
+        </mat-form-field>
+
+        <table mat-table [dataSource]="assuntosDataSource" class="mat-elevation-z8 forms">
+            <ng-container matColumnDef="descricao">
+            <th mat-header-cell *matHeaderCellDef> Descrição </th>
+            <td mat-cell *matCellDef="let assunto" class="align-left"> {{assunto.descricao}} </td>
+            </ng-container>
+    
+            <ng-container matColumnDef="actions">
+            <th mat-header-cell *matHeaderCellDef class="align-right"> Ações </th>
+            <td mat-cell *matCellDef="let assunto" class="align-right">
+                <button mat-icon-button color="warn" (click)="removeAssunto(assunto)" class="action-button">
+                <mat-icon>remove</mat-icon>
+                </button>
+            </td>
+            </ng-container>
+    
+            <tr mat-header-row *matHeaderRowDef="['descricao', 'actions']"></tr>
+            <tr mat-row *matRowDef="let row; columns: ['descricao', 'actions'];"></tr>
+        </table>
+    </div>
+
     <div class="buttons">
-        <button (click)="create()" [disabled]="getMenssage()" class="mat-elevation-z8" mat-stroked-button color="primary">SALVAR</button>
+        <button (click)="create()" class="mat-elevation-z8" mat-stroked-button color="primary">SALVAR</button>
         <button (click)="cancelar()" class="mat-elevation-z8" mat-stroked-button color="warn">CANCELAR</button>
     </div>
 

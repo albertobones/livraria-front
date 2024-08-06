@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Assunto } from '../assunto.model';
 import { AssuntoService } from '../assunto.service';
-import { ValorUtil } from '../../Util/valor-util';
+import { ValorUtil } from '../../util/valor-util';
 
 @Component({
   selector: 'app-assunto-delete',
@@ -41,7 +41,6 @@ export class AssuntoDeleteComponent implements OnInit {
       this.router.navigate(['assuntos']);
       this.assuntoService.apresentarMensagem('Assunto deletado com sucesso!');
     }, exception => {
-      console.log(exception);
       this.assuntoService.apresentarMensagem(exception.error.error);
     })
   }

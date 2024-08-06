@@ -7,7 +7,7 @@
 <form>
     <mat-form-field class="forms">
         <mat-label>Descrição</mat-label>
-        <textarea matInput [(ngModel)]="assunto.descricao" type="text" name="descricao" placeholder="Ex. Informática"></textarea>
+        <textarea matInput [(ngModel)]="assunto.descricao" type="text" maxlength="20" name="descricao" placeholder="Ex. Informática"></textarea>
     </mat-form-field>
     <div class="buttons">
         <button (click)="update()" class="mat-elevation-z8" mat-stroked-button color="primary">ALTERAR</button>

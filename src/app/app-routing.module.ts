@@ -12,6 +12,8 @@ import { AutorUpdateComponent } from "./components/views/autor/autor-update/auto
 import { LivroCreateComponent } from "./components/views/livros/livro-create/livro-create.component";
 import { LivroReadComponent } from "./components/views/livros/livro-read/livro-read.component";
 import { LivroUpdateComponent } from "./components/views/livros/livro-update/livro-update.component";
+import { LivroDeleteComponent } from "./components/views/livros/livro-delete/livro-delete.component";
+import { RelatorioComponent } from "./components/views/relatorio/relatorio/relatorio.component";
 
 const routes: Routes = [
   {
@@ -36,7 +38,7 @@ const routes: Routes = [
     path: 'livros/create', component: LivroCreateComponent
   },
   {
-    path: 'livros/delete/:codL', component: LivroUpdateComponent
+    path: 'livros/delete/:codL', component: LivroDeleteComponent
   },
   {
     path: 'livros/update/:codL', component: LivroUpdateComponent
@@ -52,6 +54,9 @@ const routes: Routes = [
   },
   {
     path: 'autores/update/:codAu', component: AutorUpdateComponent
+  },
+  {
+    path: 'relatorios', component: RelatorioComponent
   },
 ];
 

@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Assunto } from '../assunto.model';
 import { AssuntoService } from '../assunto.service';
-import { ValorUtil } from '../../Util/valor-util';
+import { ValorUtil } from '../../util/valor-util';
 
 @Component({
   selector: 'app-assuntopdate',
@@ -46,8 +46,6 @@ export class AssuntoUpdateComponent implements OnInit {
       this.cancelar();
       this.assuntoService.apresentarMensagem("Assunto atualizado com sucesso!");
     }, exception => {
-      console.log(exception);
-      //this.assuntoService.apresentarMensagem(exception.error.error);
       for (var i = 0; i < exception.error.fieldErrors.length; i++) {
         this.assuntoService.apresentarMensagem(exception.error.fieldErrors[i].message)
       }

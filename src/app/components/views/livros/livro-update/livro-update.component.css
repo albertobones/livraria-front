@@ -26,3 +26,59 @@
   button {
       margin-right: 15px;
   }
+
+  .select-with-button {
+    display: flex;
+    align-items: center;
+  }
+
+  .select-with-button mat-select,
+  .select-with-button button {
+      height: 5%; /* Ajuste a altura conforme necessário */
+  }
+
+  .select-with-button mat-select {
+    flex: 1;
+    padding: 0;
+  }
+
+  .select-with-button button {
+    margin-left: 4%;
+    min-height: 1%;
+    line-height: 8%;
+  }
+
+  .align-left {
+    text-align: left;
+  }
+
+  .align-right {
+    text-align: right;
+  }
+  
+  .mat-header-cell, .mat-cell {
+    vertical-align: middle;
+  }
+
+  .action-button {
+    display: contents;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    padding: 0;
+  }
+
+  .spacing {
+    margin-bottom: 20px;
+  }
+
+  .group-container {
+    border: 1px solid #817d7d; /* Cor e espessura da borda */
+    border-radius: 4px; /* Bordas arredondadas */
+    padding: 16px; /* Espaçamento interno */
+    margin-bottom: 8px; /* Espaçamento entre grupos */
+  }
+  
+  .form-and-table {
+    margin-bottom: 20px; /* Espaçamento entre o form e a tabela, se necessário */
+  }

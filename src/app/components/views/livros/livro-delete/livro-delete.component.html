@@ -1,0 +1,54 @@
+<div class="content">
+    <div class="title">
+        <h1>Deletar Livro</h1>
+    </div>
+</div>
+
+<form>
+  <mat-form-field class="forms">
+    <mat-label>Titulo</mat-label>
+    <input matInput [(ngModel)]="livro.titulo" type="text" name="titulo" disabled>
+  </mat-form-field>
+  <mat-form-field class="forms">
+      <mat-label>Editora</mat-label>
+      <input matInput [(ngModel)]="livro.editora" type="text" name="editora" disabled>
+  </mat-form-field>
+  <mat-form-field class="forms">
+      <mat-label>Edição</mat-label>
+      <input matInput [(ngModel)]="livro.edicao" type="number" name="edicao" disabled>
+  </mat-form-field>
+  <mat-form-field class="forms">
+      <mat-label>Ano Publicação</mat-label>
+      <input matInput [(ngModel)]="livro.anoPublicacao" type="text" name="anoPublicacao" disabled>
+  </mat-form-field>
+  <mat-form-field class="forms">
+      <mat-label>Valor</mat-label>
+      <input matInput [(ngModel)]="livro.valor" name="valor" disabled="">
+  </mat-form-field>
+
+  <div class="group-container">
+    <mat-label>Autores</mat-label>
+    <table mat-table [dataSource]="autoresDataSource" class="mat-elevation-z8 forms">
+        <ng-container matColumnDef="nome">
+        <td mat-cell *matCellDef="let autor" class="align-left"> {{autor.nome}} </td>
+        </ng-container>
+        <tr mat-row *matRowDef="let row; columns: ['nome'];"></tr>
+    </table>
+  </div>
+
+  <div class="group-container">
+    <mat-label>Assuntos</mat-label>
+      <table mat-table [dataSource]="assuntosDataSource" class="mat-elevation-z8 forms">
+          <ng-container matColumnDef="descricao">
+          <td mat-cell *matCellDef="let assunto" class="align-left"> {{assunto.descricao}} </td>
+          </ng-container>
+          <tr mat-row *matRowDef="let row; columns: ['descricao'];"></tr>
+      </table>
+  </div>
+    
+    <div class="buttons">
+        <button (click)="delete()" class="mat-elevation-z8" mat-stroked-button color="primary">DELETAR</button>
+        <button (click)="cancelar()" class="mat-elevation-z8" mat-stroked-button color="warn">CANCELAR</button>
+    </div>
+
+</form>

@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Autor } from '../autor.model';
 import { AutorService } from '../autor.service';
-import { ValorUtil } from '../../Util/valor-util';
+import { ValorUtil } from '../../util/valor-util';
 
 @Component({
   selector: 'app-autorpdate',
@@ -46,8 +46,6 @@ export class AutorUpdateComponent implements OnInit {
       this.cancelar();
       this.autorService.apresentarMensagem("Autor atualizado com sucesso!");
     }, exception => {
-      console.log(exception);
-      //this.autorService.apresentarMensagem(exception.error.error);
       for (var i = 0; i < exception.error.fieldErrors.length; i++) {
         this.autorService.apresentarMensagem(exception.error.fieldErrors[i].message)
       }

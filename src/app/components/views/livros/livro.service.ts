@@ -33,12 +33,12 @@ export class LivroService {
   }
 
   update(codL: number, livro: Livro): Observable<Livro> {
-    const url = `${this.baseUrl}/livro/update/${codL}`
+    const url = `${this.baseUrl}/livros/update/${codL}`
     return this.http.put<Livro>(url, livro);
   }
 
   delete(codL: number): Observable<void> {
-    const url = `${this.baseUrl}/livro/${codL}`;
+    const url = `${this.baseUrl}/livros/${codL}`;
     return this.http.delete<void>(url);
   }
 

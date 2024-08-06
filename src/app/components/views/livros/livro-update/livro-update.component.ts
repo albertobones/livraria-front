@@ -4,7 +4,11 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { AssuntoService } from '../../assunto/assunto.service';
 import { Livro } from '../livro.model';
 import { LivroService } from '../livro.service';
-import { ValorUtil } from '../../Util/valor-util';
+import { ValorUtil } from '../../util/valor-util';
+import { Autor } from '../../autor/autor.model';
+import { Assunto } from '../../assunto/assunto.model';
+import { AutorService } from '../../autor/autor.service';
+import { MatTableDataSource } from '@angular/material/table';
 
 @Component({
   selector: 'app-livro-update',
@@ -18,8 +22,6 @@ export class LivroUpdateComponent implements OnInit {
   edicao = new FormControl('', [Validators.required]);
   anoPublicacao = new FormControl('', [Validators.minLength(4)]);
   valor = new FormControl('', [Validators.required]);
-  autores = new FormControl([], [Validators.required]);
-  assuntos = new FormControl([], [Validators.required]);
 
   livro: Livro = {
     codL: 0,
@@ -31,13 +33,21 @@ export class LivroUpdateComponent implements OnInit {
     autores: [],
     assuntos: []
   }
-  idAssunto: string = '';
+  autores: Autor[] = [];
+  assuntos: Assunto[] = [];
+  selectedAutor: Autor | null = null;
+  selectedAssunto: Assunto | null = null;
+  filteredAutores: Autor[] = [];
+  filteredAssuntos: Assunto[] = [];
+  autoresDataSource = new MatTableDataSource<Autor>(this.livro.autores || []);
+  assuntosDataSource = new MatTableDataSource<Assunto>(this.livro.assuntos || []);
 
   constructor(
     private router: Router,
     private route: ActivatedRoute,
     private livroService: LivroService,
-    private assuntoService: AssuntoService
+    private assuntoService: AssuntoService,
+    private autorService: AutorService
   ) { }
 
   ngOnInit(): void {
@@ -48,45 +58,95 @@ export class LivroUpdateComponent implements OnInit {
     this.findById();
   }
 
+  carregarListaAutores(): void {
+    this.autorService.findAll().subscribe(data => {
+      this.autores = data;
+      this.filterAutores();
+    });
+  }
+
+  carregarListaAssuntos(): void {
+    this.assuntoService.findAll().subscribe(data => {
+      this.assuntos = data;
+      this.filterAssuntos();
+    });
+  }
+
   findById(): void {
     this.livroService.findById(this.livro.codL!).subscribe((resposta) => {
-      console.log("livro: "+resposta);
-      console.log("livro.assuntos: "+resposta.assuntos);
-      console.log("livro.autores: "+resposta.autores);
       this.livro = resposta;
-      this.livro.assuntos = resposta.assuntos;
-      this.livro.autores = resposta.autores;
+      this.assuntosDataSource.data = this.livro.assuntos!;
+      this.autoresDataSource.data = this.livro.autores!;
+      this.carregarListaAutores();
+      this.carregarListaAssuntos();
     })
   }
 
-  
+  filterAutores(): void {
+    const selectedAutorIds = this.livro.autores?.map(autor => autor.codAu) || [];
+    this.filteredAutores = this.autores.filter(autor => !selectedAutorIds.includes(autor.codAu));
+  }
 
-  getMenssage() {
-    if (this.titulo.invalid) {
-      return "O campo TITULO deve conter entre 3 e 100 caracteres.";
+  filterAssuntos(): void {
+    const selectedAssuntoIds = this.livro.assuntos?.map(assunto => assunto.codAs) || [];
+    this.filteredAssuntos = this.assuntos.filter(assunto => !selectedAssuntoIds.includes(assunto.codAs));
+  }
+
+  addAutor(): void {
+    if (this.selectedAutor && !(this.livro.autores || []).find(a => a.codAu === this.selectedAutor!.codAu)) {
+      this.livro.autores = [...(this.livro.autores || []), this.selectedAutor];
+      this.autoresDataSource.data = this.livro.autores;
+      this.filterAutores();
     }
-    if (this.editora.invalid) {
-      return "O campo AUTOR deve conter entre 3 e 100 caracteres.";
+    this.selectedAutor = null;
+  }
+  
+  addAssunto(): void {
+    if (this.selectedAssunto && !(this.livro.assuntos || []).find(a => a.codAs === this.selectedAssunto!.codAs)) {
+      this.livro.assuntos = [...(this.livro.assuntos || []), this.selectedAssunto]
+      this.assuntosDataSource.data = this.livro.assuntos;
+      this.filterAssuntos();
     }
-    if (this.edicao.invalid) {
-      return "O campo EDICAO deve ser informado.";
-    }
-    return false;
+    this.selectedAssunto = null;
+  }
+
+  removeAutor(autor: Autor): void {
+    this.livro.autores = (this.livro.autores || []).filter(a => a.codAu !== autor.codAu);
+    this.autoresDataSource.data = this.livro.autores;
+    this.filterAutores();
+  }
+
+  removeAssunto(assunto: Assunto): void {
+    this.livro.assuntos = (this.livro.assuntos || []).filter(a => a.codAs !== assunto.codAs);
+    this.assuntosDataSource.data = this.livro.assuntos;
+    this.filterAssuntos();
   }
 
   cancelar() {
-    this.router.navigate([`assuntos/${this.idAssunto}/livros`]);
+    this.router.navigate(['livros']);
   }
 
   update(): void {
     this.livroService.update(this.livro.codL!, this.livro).subscribe((resposta) => {
+      this.livro = resposta;
       this.cancelar();
       this.livroService.apresentarMensagem("Livro atualizado com sucesso!");
     }, (exception) => {
-      for (let i = 0; i < exception.error.fieldErrors.length; i++) {
-        this.livroService.apresentarMensagem(exception.error.fieldErrors[i].message);
+      if(exception.error.fieldErrors){
+        for (let i = 0; i < exception.error.fieldErrors.length; i++) {
+          this.livroService.apresentarMensagem(exception.error.fieldErrors[i].message);
+        }
+      } else {        
+          this.livroService.apresentarMensagem(exception.error.error);
       }
     })
   }
 
+  onInput(event: any) {
+    const value = event.target.value;
+    const numericValue = value.replace(/\D/g, '').slice(0, 4);
+    event.target.value = numericValue;
+    this.anoPublicacao.setValue(numericValue, { emitEvent: false });
+  }
+  
 }

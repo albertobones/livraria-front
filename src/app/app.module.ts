@@ -1,4 +1,4 @@
-import { NgModule } from "@angular/core";
+import { NgModule, LOCALE_ID } from "@angular/core";
 import { BrowserModule } from "@angular/platform-browser";
 import { HttpClientModule } from "@angular/common/http";
 
@@ -33,7 +33,13 @@ import { AutorCreateComponent } from "./components/views/autor/autor-create/auto
 import { AutorDeleteComponent } from "./components/views/autor/autor-delete/autor-delete.component";
 import { AutorReadComponent } from "./components/views/autor/autor-read/autor-read.component";
 import { AutorUpdateComponent } from "./components/views/autor/autor-update/autor-update.component";
+import { MatSortModule } from "@angular/material/sort";
+import { MatSelect, MatSelectModule } from "@angular/material/select";
+import { LivroDeleteComponent } from "./components/views/livros/livro-delete/livro-delete.component";
+import { CommonModule, registerLocaleData } from "@angular/common";
+import localePt from '@angular/common/locales/pt';
 
+registerLocaleData(localePt)
 
 @NgModule({
   declarations: [
@@ -53,10 +59,12 @@ import { AutorUpdateComponent } from "./components/views/autor/autor-update/auto
     LivroReadComponent,
     LivroCreateComponent,
     LivroUpdateComponent,
+    LivroDeleteComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
+    HttpClientModule,
     BrowserAnimationsModule,
     MatToolbarModule,
     MatSidenavModule,
@@ -64,16 +72,20 @@ import { AutorUpdateComponent } from "./components/views/autor/autor-update/auto
     MatIconModule,
     MatCardModule,
     MatTableModule,
-    HttpClientModule,
     MatButtonModule,
-    FormsModule,
-    ReactiveFormsModule,
     MatInputModule,
     MatFormFieldModule,
     MatSnackBarModule,
+    MatSortModule,
+    MatSelectModule,
+    FormsModule,
+    ReactiveFormsModule,
+    CommonModule,
     NgxSmartModalModule.forRoot(),
   ],
-  providers: [],
+  providers: [
+    { provide: LOCALE_ID, useValue: 'pt-BR' }
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

@@ -24,7 +24,6 @@ export class AutorReadComponent implements OnInit {
 
   findAll() {
     this.autorService.findAll().subscribe((resp) => {
-      //console.log(resp);
       this.autores = resp;
     });
   }

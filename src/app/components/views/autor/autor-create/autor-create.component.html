@@ -7,7 +7,7 @@
 <form>
     <mat-form-field class="forms">
         <mat-label>Nome</mat-label>
-        <input [(ngModel)]="autor.nome" matInput type="text" name="nome" placeholder="Ex. Computação">
+        <input [(ngModel)]="autor.nome" matInput type="text" maxlength="40" name="nome" placeholder="Ex. Computação">
     </mat-form-field>
     <div class="buttons">
         <button (click)="create()" class="mat-elevation-z8" mat-stroked-button color="primary">SALVAR</button>

@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Autor } from '../autor.model';
 import { AutorService } from '../autor.service';
-import { ValorUtil } from '../../Util/valor-util';
+import { ValorUtil } from '../../util/valor-util';
 
 @Component({
   selector: 'app-autor-delete',
@@ -41,7 +41,6 @@ export class AutorDeleteComponent implements OnInit {
       this.router.navigate(['autores']);
       this.autorService.apresentarMensagem('Autor deletado com sucesso!');
     }, exception => {
-      console.log(exception);
       this.autorService.apresentarMensagem(exception.error.error);
     })
   }
